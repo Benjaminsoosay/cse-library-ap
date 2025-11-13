@@ -26,5 +26,5 @@ A comprehensive REST API for managing books and authors in a library system, bui
 
 1. *Clone the repository*
    ```bash
-   git clone https://github.com/your-username/library-api.git
+   https://github.com/Benjaminsoosay/cse-library-ap.git
    cd library-api
