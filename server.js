@@ -45,7 +45,16 @@ app.get('/health', (req, res) => {
   res.status(200).json({ status: 'OK', message: 'Server is running' });
 });
 
-// 404 handler
+// ✅ Root welcome route (added before the 404 handler)
+app.get('/', (req, res) => {
+  res.status(200).json({
+    message: 'Welcome to the Library Management API',
+    docs: '/api-docs',
+    health: '/health'
+  });
+});
+
+// 404 handler (keep this last)
 app.use('*', (req, res) => {
   res.status(404).json({ error: 'Route not found' });
 });
