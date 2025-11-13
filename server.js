@@ -1,10 +1,10 @@
 const express = require('express');
+const mongoose = require('mongoose');
 const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 const cors = require('cors');
 require('dotenv').config();
 
-const connectDB = require('./config/database');
 const bookRoutes = require('./routes/book');
 const memberRoutes = require('./routes/members');
 
@@ -56,10 +56,16 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: 'Something went wrong!' });
 });
 
-// Connect to DB and start server
-connectDB().then(() => {
-  app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-    console.log(`API Documentation: http://localhost:${PORT}/api-docs`);
+// Database connection
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/library')
+  .then(() => {
+    console.log('Connected to MongoDB');
+    app.listen(PORT, () => {
+      console.log(`Server is running on port ${PORT}`);
+      console.log(`API Documentation: http://localhost:${PORT}/api-docs`);
+    });
+  })
+  .catch((error) => {
+    console.error('Database connection error:', error);
+    process.exit(1);
   });
-});
